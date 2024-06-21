@@ -4,7 +4,7 @@ const router = express.Router();
 const Eldenarm = require('../models/arm')
 
 // INDEX
-router.get('/', async (req, res) => {
+router.get('/', (req, res) => {
     try {
         res.render('index.ejs')
     } catch (err) {

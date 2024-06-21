@@ -3,11 +3,9 @@ const Schema = mongoose.Schema
 
 const armSchema = new Schema({
     name: {type: String, required: true,},
-    found: String,
-    reqs: String,
-    scaling: String
-});
+    found: String
+})
 
-const Eldenarm = mongoose.model('eldArm', armSchema);
+const Eldenarm = mongoose.model('eldArm', armSchema)
 
 module.exports = Eldenarm;
