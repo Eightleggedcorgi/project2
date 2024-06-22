@@ -6,6 +6,6 @@ const armSchema = new Schema({
     found: String
 })
 
-const Eldenarm = mongoose.model('eldArm', armSchema)
+const Eldenarm = mongoose.model('Eldenarm', armSchema)
 
 module.exports = Eldenarm;

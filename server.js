@@ -8,6 +8,8 @@ const eldController = require('./controllers/elden');
 const mongoURI = 'mongodb+srv://SEBPT319:Stupid@cluster0.ahxum32.mongodb.net/'
 
 // MIDDLEWARE
+app.use(express.static('public'));
+app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.use('/elden', eldController);
