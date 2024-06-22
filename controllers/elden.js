@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
-const Eldenarm = require('../models/arm')
+const Eldenarm = require('../models/arm');
+const Eldenweps = require('../models/weps');
 
 // ARMOR SEED TESTING
 router.get("/seed", async (req, res) => {
@@ -13,7 +14,7 @@ router.get("/seed", async (req, res) => {
         },
         {
           name: "Veteran's Set",
-          found: "found in purchase from Enia after beating Commander Niall in Castle Sol"
+          found: "purchase from Enia after beating Commander Niall in Castle Sol, Consecrated Snowfield"
         },
         {
           name: "Mushroom Set",
@@ -21,6 +22,51 @@ router.get("/seed", async (req, res) => {
         },
       ]);
       res.redirect("/elden/armor");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Seed Error");
+    }
+  });
+
+// WEAPON SEED TESTING
+router.get("/seed/weps", async (req, res) => {
+    try {
+      await Eldenweps.create([
+        {
+          name: "Blasphemous Blade",
+          found: "transpose Rykard's soul",
+          type: "Greatsword",
+          reqs: "22 STR, 15 DEX, 21 FAI",
+          scaling: "D, D, D",
+          endScaling: "C, C, B",
+          dmgtypes: "Phys, Fire",
+          somber: true,
+          extra: "Restore HP on kill or special attack hit"
+        },
+        {
+          name: "Ripple Blade",
+          found: "purchase from Pidia in Caria Manor",
+          type: "Axe",
+          reqs: "11 STR, 11 DEX, 20 ARC",
+          scaling: "NONE, NONE, A",
+          endScaling: "NONE, NONE, S",
+          dmgtypes: "Phys",
+          somber: false,
+          extra: "Partially unique moveset"
+        },
+        {
+          name: "Moonveil",
+          found: "defeat the Magma Wyrm in Gael Tunnel, Caelid",
+          type: "Katana",
+          reqs: "12 STR, 18 DEX, 23 INT",
+          scaling: "E, D, C",
+          endScaling: "E, B, B",
+          dmgtypes: "Phys, Magic",
+          somber: true,
+          extra: "Causes bleed, use in PVP to prove you're a little bitch"
+        },
+      ]);
+      res.redirect("/elden/weapons");
     } catch (err) {
       console.error(err);
       res.status(500).send("Seed Error");
@@ -48,9 +94,10 @@ router.get('/armor', async (req, res) => {
 });
 
 // WEAPON INDEX
-router.get('/weapons', (req, res) => {
+router.get('/weapons', async (req, res) => {
     try {
-        res.render('weapondex.ejs')
+        const allWeapons = await Eldenweps.find({});
+        res.render('weapondex.ejs', { weps: allWeapons });
     } catch (err) {
         console.error(err);
     }
@@ -83,10 +130,64 @@ router.get('/sorceries', (req, res) => {
     }
 });
 
-// ---------------------------------- OTHER STUFF --------------------------------------
+// ---------------------------------- NEW SECTION --------------------------------------
 // NEW
 router.get('/new', (req, res) => {
     res.render('new.ejs')
+});
+
+// ---------------------------------- DELETE SECTION --------------------------------------
+// WEAPON DELETE
+router.delete('/:id', async (req, res) => {
+    try {
+        await Eldenweps.findByIdAndDelete(req.params.id)
+        res.redirect('/elden/weapons')
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// ARMOR DELETE
+router.delete('/:id', async (req, res) => {
+    try {
+        await Eldenarm.findByIdAndDelete(req.params.id)
+        res.redirect('/elden/armor')
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// ARMOR UPDATE
+router.put("/:id", async (req, res) => {
+    try {
+        const updatedArm = await Eldenarm.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.redirect("/elden/armor");
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// ARMOR CREATE
+router.post('/', async (req, res) => {
+    try {
+        const createdArm = await Eldenarm.create(req.body);
+        res.redirect("/elden/armor");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+});
+
+// ARMOR EDIT
+router.get("/:id/edit", async (req, res) => {
+    try {
+        const foundArm = await Fruit.findById(req.params.id);
+        res.render("edit.ejs", {
+            eldarm: foundArm
+        });
+    } catch (err) {
+        console.error(err);
+    }
 });
 
 module.exports = router;

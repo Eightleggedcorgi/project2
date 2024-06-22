@@ -16,7 +16,10 @@
             <li>
                 The <a href='/arm/<%=arm[i].id %> '>
                     <%=arm[i].name; %>
-                </a> is <%=arm[i].found; %>
+                </a> <%=arm[i].found; %>
+                <form action='/elden/<%=arm[i].id %>?_method=DELETE' method='POST'>
+                    <input type='submit' value='Delete Entry'/>
+                </form>
             <% } %>
         </ul>
 </body>

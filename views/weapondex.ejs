@@ -11,5 +11,27 @@
         <a href="/elden">Home</a> <br> <br>
         <a href="/elden/new">Add an Entry!</a>
     </nav>
+    <ul>
+        <% for (let i = 0; i < weps.length; i++) { %>
+            <li>
+                The <a href='/weps/<%=weps[i].id %> '>
+                    <%=weps[i].name; %>
+                </a> <%=weps[i].found; %> <br>
+                <%=weps[i].type; %> <br>
+                <%=weps[i].reqs; %> <br>
+                <%=weps[i].scaling; %> <br>
+                <%=weps[i].endScaling; %> <br>
+                <%=weps[i].dmgtypes; %> <br>
+                <% if(weps[i].somber === true){ %> 
+                    Somber
+                <% } else { %>
+                    Standard
+                <% } %> <br>
+                <%=weps[i].extra; %>
+                <form action='/elden/<%=weps[i].id %>?_method=DELETE' method='POST'>
+                    <input type='submit' value='Delete Entry'/>
+                </form>
+            <% } %>
+        </ul>
 </body>
 </html>
