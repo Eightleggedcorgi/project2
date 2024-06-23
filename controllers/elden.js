@@ -3,22 +3,25 @@ const router = express.Router();
 
 const Eldenarm = require('../models/arm');
 const Eldenweps = require('../models/weps');
+const Eldenring = require('../models/ring');
+const Eldencant = require('../models/cant');
+const Eldensorc = require('../models/sorc');
 
 // ARMOR SEED TESTING
-router.get("/seed", async (req, res) => {
+router.get("/seed/armor", async (req, res) => {
     try {
       await Eldenarm.create([
         {
-          name: "Samurai Set",
-          found: "found in limgrave, or starting as a samurai"
+          name: "Samurai / Land of Reeds Set",
+          found: "In the Isolated Merchant's Shack, Northern Dragonbarrow, or by starting as a samurai"
         },
         {
           name: "Veteran's Set",
-          found: "purchase from Enia after beating Commander Niall in Castle Sol, Consecrated Snowfield"
+          found: "Purchase from Enia after beating Commander Niall in Castle Sol, Consecrated Snowfield"
         },
         {
           name: "Mushroom Set",
-          found: "found in some stupid-ass cave in caelid"
+          found: "In some stupid-ass stinky cave in Caelid (Seethewater specifically)"
         },
       ]);
       res.redirect("/elden/armor");
@@ -73,6 +76,75 @@ router.get("/seed/weps", async (req, res) => {
     }
   });
 
+// RING SEED TESTING
+router.get("/seed/rings", async (req, res) => {
+    try {
+      await Eldenring.create([
+        {
+          name: "Sacrificial Twig",
+          found: "All over the place",
+          effect: "Prevents rune loss on death, but is consumed"
+        },
+        {
+            name: "Blue Dancer Charm",
+            found: "Defeat the Guardian Golem in Highroad Cave, Limgrave",
+            effect: "Physical damage output increased with lower equipment load"
+        },
+        {
+            name: "Greatshield Talisman",
+            found: "In an armored carriage chest in Altus Plateau",
+            effect: "Reduces stamina loss from blocking by 20%"
+        },
+      ]);
+      res.redirect("/elden/rings");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Seed Error");
+    }
+  });
+
+// INCANT SEED TESTING
+router.get("/seed/incantations", async (req, res) => {
+    try {
+      await Eldencant.create([
+        {
+          name: "Ancient Dragon Lightning Spear",
+          found: "Buy from vendor after giving Ancient Dragon Prayerbook from Farum Azula",
+          details: "Summon a red lightning bolt that strikes in front of you and emits an AoE",
+          reqs: "32 FAI",
+          dmgtypes: "Lightning",
+          fpcost: 25,
+          slotcost: 1,
+          cancharge: false
+        },
+        {
+            name: "Radagon's Rings of Light",
+            found: "Buy from vendor after giving Golden Order Principia from Leyndell",
+            details: "Unleash a damaging golden wave",
+            reqs: "31 FAI, 31 INT",
+            dmgtypes: "Holy",
+            fpcost: 21,
+            slotcost: 1,
+            cancharge: true
+        },
+        {
+            name: "Flame Sling",
+            found: "Buy from Brother Corhyn in Roundtable, available immediately",
+            details: "Throw a fireball. Thats it. Expecting a Bugatti?",
+            reqs: "10 FAI",
+            dmgtypes: "Fire",
+            fpcost: 11,
+            slotcost: 1,
+            cancharge: true
+        },
+      ]);
+      res.redirect("/elden/incantations");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Seed Error");
+    }
+  });
+
 // ---------------------------------- INDEX SECTION --------------------------------------
 // INDEX / HOMEPAGE
 router.get('/', (req, res) => {
@@ -104,27 +176,30 @@ router.get('/weapons', async (req, res) => {
 });
 
 // RING INDEX
-router.get('/rings', (req, res) => {
+router.get('/rings', async (req, res) => {
     try {
-        res.render('ringdex.ejs')
+        const allRings = await Eldenring.find({});
+        res.render('ringdex.ejs', { ring: allRings });
     } catch (err) {
         console.error(err);
     }
 });
 
 // INCANT INDEX
-router.get('/incantations', (req, res) => {
+router.get('/incantations', async (req, res) => {
     try {
-        res.render('cantdex.ejs')
+        const allCants = await Eldencant.find({});
+        res.render('cantdex.ejs', { cant: allCants });
     } catch (err) {
         console.error(err);
     }
 });
 
 // SORCERY INDEX
-router.get('/sorceries', (req, res) => {
+router.get('/sorceries', async (req, res) => {
     try {
-        res.render('sorcdex.ejs')
+        const allSorc = await Eldensorc.find({});
+        res.render('sorcdex.ejs', { sorc: allSorc });
     } catch (err) {
         console.error(err);
     }
@@ -152,6 +227,17 @@ router.delete('/:id', async (req, res) => {
     try {
         await Eldenarm.findByIdAndDelete(req.params.id)
         res.redirect('/elden/armor')
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+
+// WEAPON UPDATE
+router.put("/:id", async (req, res) => {
+    try {
+        const updatedWep = await Eldenweps.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.redirect("/elden/weapons");
     } catch (err) {
         console.error(err)
     }

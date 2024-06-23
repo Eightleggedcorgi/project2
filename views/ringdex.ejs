@@ -6,10 +6,22 @@
     <title>Elden Compendium: Rings</title>
 </head>
 <body>
-    <h1> NOT elden rings </h1>
+    <h1> Un-Elden Rings </h1>
     <nav>
         <a href="/elden">Home</a> <br> <br>
         <a href="/elden/new">Add an Entry!</a>
     </nav>
+    <ul>
+        <% for (let i = 0; i < ring.length; i++) { %>
+            <li>
+                The <a href='/ring/<%=ring[i].id %> '>
+                    <%=ring[i].name; %> <br>
+                </a> <%=ring[i].found; %> <br>
+                <%=ring[i].effect; %> <br>
+                <form action='/elden/<%=ring[i].id %>?_method=DELETE' method='POST'>
+                    <input type='submit' value='Delete Entry'/>
+                </form>
+            <% } %>
+        </ul>
 </body>
 </html>
