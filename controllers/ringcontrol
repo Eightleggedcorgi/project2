@@ -1,0 +1,88 @@
+const express = require('express');
+const router = express.Router();
+
+const Eldenring = require('../models/ring');
+
+// RING SEED TESTING
+router.get("/seed", async (req, res) => {
+    try {
+      await Eldenring.create([
+        {
+          name: "Sacrificial Twig",
+          found: "All over the place, and a rare drop from Wormfaces",
+          effect: "Prevents rune loss on death, but is consumed"
+        },
+        {
+            name: "Blue Dancer Charm",
+            found: "Defeat the Guardian Golem in Highroad Cave, Limgrave",
+            effect: "Physical damage output increased with lower equipment load"
+        },
+        {
+            name: "Greatshield Talisman",
+            found: "In an armored carriage chest in Altus Plateau",
+            effect: "Reduces stamina loss from blocking by 20%"
+        },
+      ]);
+      res.redirect("/rings");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Seed Error");
+    }
+  });
+
+// RING INDEX
+router.get('/', async (req, res) => {
+    try {
+        const allRings = await Eldenring.find({});
+        res.render('ringdex.ejs', { ring: allRings });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+// RING DELETE
+router.delete('/:id', async (req, res) => {
+    try {
+        await Eldenring.findByIdAndDelete(req.params.id)
+        res.redirect('/rings')
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// RING UPDATE
+router.put("/:id", async (req, res) => {
+    try {
+        const updatedRing = await Eldenring.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.redirect("/rings", {
+            improvedring: updatedRing
+        });
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// RING CREATE
+router.post('/', async (req, res) => {
+    try {
+        const createdRing = await Eldenring.create(req.body);
+        res.redirect("/rings");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+});
+
+// RING EDIT
+router.get("/:id/edit", async (req, res) => {
+    try {
+        const foundRing = await Eldenring.findById(req.params.id);
+        res.render("edit.ejs", {
+            eldring: foundRing
+        });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+module.exports = router;

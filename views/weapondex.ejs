@@ -9,7 +9,7 @@
     <h1> WEBBUNS </h1>
     <nav>
         <a href="/elden">Home</a> <br> <br>
-        <a href="/elden/new">Add an Entry!</a>
+        <a href="/weapons/new">Add an Entry!</a>
     </nav>
     <ul>
         <% for (let i = 0; i < weps.length; i++) { %>
@@ -22,13 +22,13 @@
                 <%=weps[i].scaling; %> <br>
                 <%=weps[i].endScaling; %> <br>
                 <%=weps[i].dmgtypes; %> <br>
+                <%=weps[i].extra; %> <br>
                 <% if(weps[i].somber === true){ %> 
                     Somber
                 <% } else { %>
                     Standard
                 <% } %> <br>
-                <%=weps[i].extra; %>
-                <form action='/elden/<%=weps[i].id %>?_method=DELETE' method='POST'>
+                <form action='/weapons/<%=weps[i].id %>?_method=DELETE' method='POST'>
                     <input type='submit' value='Delete Entry'/>
                 </form>
             <% } %>

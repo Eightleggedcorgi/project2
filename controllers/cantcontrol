@@ -1,0 +1,106 @@
+const express = require('express');
+const router = express.Router();
+
+const Eldencant = require('../models/cant');
+
+// INCANT SEED TESTING
+router.get("/seed", async (req, res) => {
+    try {
+      await Eldencant.create([
+        {
+          name: "Ancient Dragon Lightning Spear",
+          found: "Buy from vendor after giving Ancient Dragon Prayerbook from Farum Azula",
+          details: "Summon a red lightning bolt that strikes in front of you and emits an AoE",
+          reqs: "32 FAI",
+          dmgtypes: "Lightning",
+          fpcost: 25,
+          slotcost: 1,
+          cancharge: false
+        },
+        {
+            name: "Radagon's Rings of Light",
+            found: "Buy from vendor after giving Golden Order Principia Book from Leyndell",
+            details: "Unleash a damaging golden wave",
+            reqs: "31 FAI, 31 INT",
+            dmgtypes: "Holy",
+            fpcost: 21,
+            slotcost: 1,
+            cancharge: true
+        },
+        {
+            name: "Flame Sling",
+            found: "Buy from Brother Corhyn in Roundtable Hold, available immediately",
+            details: "Throw a fireball. Thats it. Expecting a Bugatti?",
+            reqs: "10 FAI",
+            dmgtypes: "Fire",
+            fpcost: 11,
+            slotcost: 1,
+            cancharge: true
+        },
+      ]);
+      res.redirect("/incantations");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Seed Error");
+    }
+  });
+
+// INCANT INDEX
+router.get('/', async (req, res) => {
+    try {
+        const allCants = await Eldencant.find({});
+        res.render('cantdex.ejs', { cant: allCants });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+// INCANT DELETE
+router.delete('/:id', async (req, res) => {
+    try {
+        await Eldencant.findByIdAndDelete(req.params.id)
+        res.redirect('/incantations')
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// INCANT UPDATE
+router.put("/:id", async (req, res) => {
+    try {
+        const updatedCant = await Eldencant.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.redirect("/incantations");
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// INCANT CREATE
+router.post('/', async (req, res) => {
+    if (req.body.cancharge === 'on') {
+        req.body.cancharge = true
+    } else {
+        req.body.cancharge = false
+    }
+    try {
+        const createdCant = await Eldencant.create(req.body);
+        res.redirect("/incantations");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+});
+
+// INCANT EDIT
+router.get("/:id/edit", async (req, res) => {
+    try {
+        const foundCant = await Eldencant.findById(req.params.id);
+        res.render("edit.ejs", {
+            eldcant: foundCant
+        });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+module.exports = router;

@@ -9,8 +9,8 @@ const wepsSchema = new Schema({
     scaling: String,
     endScaling: String,
     dmgtypes: String,
-    somber: Boolean,
     extra: String,
+    somber: Boolean
 })
 
 const Eldenweps = mongoose.model('Eldenweps', wepsSchema)

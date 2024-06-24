@@ -1,0 +1,106 @@
+const express = require('express');
+const router = express.Router();
+
+const Eldensorc = require('../models/sorc');
+
+// SORCERY SEED TESTING
+router.get("/seed", async (req, res) => {
+    try {
+      await Eldensorc.create([
+        {
+          name: "Comet Azur",
+          found: "Get from Primeval Sorcerer Azur behind the Hermit Village, Mt. Gelmir",
+          details: "GIANT LASER BEAM",
+          reqs: "60 INT",
+          dmgtypes: "Magic",
+          fpcost: 40,
+          slotcost: 3,
+          cancharge: true
+        },
+        {
+            name: "Glintstone Stars",
+            found: "Buy from Sellen in Waypoint Ruins, Limgrave or from Gowry in Gowry's Shack, Caelid",
+            details: "Summon three magic projectiles that home in on a target in unison",
+            reqs: "12 INT",
+            dmgtypes: "Magic",
+            fpcost: 12,
+            slotcost: 1,
+            cancharge: false
+        },
+        {
+            name: "Comet",
+            found: "Found behind an illusory bookshelf in Raya Lucaria",
+            details: "Single, big, fast, dangerous projectile with slight homing",
+            reqs: "52 INT",
+            dmgtypes: "Magic",
+            fpcost: 24,
+            slotcost: 1,
+            cancharge: true
+        },
+      ]);
+      res.redirect("/sorceries");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Seed Error");
+    }
+  });
+
+// SORCERY INDEX
+router.get('/', async (req, res) => {
+    try {
+        const allSorc = await Eldensorc.find({});
+        res.render('sorcdex.ejs', { sorc: allSorc });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+// SORCERY DELETE
+router.delete('/:id', async (req, res) => {
+    try {
+        await Eldensorc.findByIdAndDelete(req.params.id)
+        res.redirect('/sorceries')
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// SORCERY UPDATE
+router.put("/:id", async (req, res) => {
+    try {
+        const updatedSorc = await Eldensorc.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.redirect("/sorceries");
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// SORCERY CREATE
+router.post('/', async (req, res) => {
+    if (req.body.cancharge === 'on') {
+        req.body.cancharge = true
+    } else {
+        req.body.cancharge = false
+    }
+    try {
+        const createdSorc = await Eldensorc.create(req.body);
+        res.redirect("/sorceries");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+});
+
+// SORCERY EDIT
+router.get("/:id/edit", async (req, res) => {
+    try {
+        const foundSorc = await Eldensorc.findById(req.params.id);
+        res.render("edit.ejs", {
+            eldsorc: foundSorc
+        });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+module.exports = router;

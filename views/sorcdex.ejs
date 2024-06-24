@@ -11,5 +11,26 @@
         <a href="/elden">Home</a> <br> <br>
         <a href="/elden/new">Add an Entry!</a>
     </nav>
+    <ul>
+        <% for (let i = 0; i < sorc.length; i++) { %>
+            <li>
+                The <a href='/sorc/<%=sorc[i].id %> '>
+                    <%=sorc[i].name; %> <br>
+                </a> <%=sorc[i].found; %> <br>
+                <%=sorc[i].details; %> <br>
+                <%=sorc[i].reqs; %> <br>
+                <%=sorc[i].dmgtypes; %> <br>
+                <%=sorc[i].fpcost; %> <br>
+                <%=sorc[i].slotcost; %> <br>
+                <% if(sorc[i].cancharge === true){ %> 
+                    Chargeable
+                <% } else { %>
+                    Standard
+                <% } %> <br>
+                <form action='/sorceries/<%=sorc[i].id %>?_method=DELETE' method='POST'>
+                    <input type='submit' value='Delete Entry'/>
+                </form>
+            <% } %>
+        </ul>
 </body>
 </html>

@@ -1,0 +1,114 @@
+const express = require('express');
+const router = express.Router();
+
+const Eldenweps = require('../models/weps');
+
+// WEAPON SEED TESTING
+router.get("/seed", async (req, res) => {
+    try {
+      await Eldenweps.create([
+        {
+          name: "Blasphemous Blade",
+          found: "transpose Rykard's soul",
+          type: "Greatsword",
+          reqs: "22 STR, 15 DEX, 21 FAI",
+          scaling: "D, D, D",
+          endScaling: "C, C, B",
+          dmgtypes: "Phys, Fire",
+          somber: true,
+          extra: "Restore HP on kill or special attack hit"
+        },
+        {
+          name: "Ripple Blade",
+          found: "purchase from Pidia in Caria Manor",
+          type: "Axe",
+          reqs: "11 STR, 11 DEX, 20 ARC",
+          scaling: "NONE, NONE, A",
+          endScaling: "NONE, NONE, S",
+          dmgtypes: "Phys",
+          somber: false,
+          extra: "Partially unique moveset"
+        },
+        {
+          name: "Moonveil",
+          found: "defeat the Magma Wyrm in Gael Tunnel, Caelid",
+          type: "Katana",
+          reqs: "12 STR, 18 DEX, 23 INT",
+          scaling: "E, D, C",
+          endScaling: "E, B, B",
+          dmgtypes: "Phys, Magic",
+          somber: true,
+          extra: "Causes bleed, use in PVP to prove you're a little bitch"
+        },
+      ]);
+      res.redirect("/weapons");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Seed Error");
+    }
+  });
+
+// WEAPON INDEX
+router.get('/', async (req, res) => {
+    try {
+        const allWeapons = await Eldenweps.find({});
+        res.render('weapondex.ejs', { weps: allWeapons });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+// WEAPON NEW
+router.get('/new', (req, res) => {
+    res.render('weaponnew.ejs')
+});
+
+// WEAPON DELETE
+router.delete('/:id', async (req, res) => {
+    try {
+        await Eldenweps.findByIdAndDelete(req.params.id)
+        res.redirect('/weapons')
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// WEAPON UPDATE
+router.put("/:id", async (req, res) => {
+    try {
+        const updatedWep = await Eldenweps.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.redirect("/weapons");
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// WEAPON CREATE
+router.post('/', async (req, res) => {
+    if (req.body.somber === 'on') {
+        req.body.somber = true
+    } else {
+        req.body.somber = false
+    }
+    try {
+        const createdWep = await Eldenweps.create(req.body);
+        res.redirect("/weapons");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+});
+
+// WEAPON EDIT
+router.get("/:id/edit", async (req, res) => {
+    try {
+        const foundWep = await Eldenweps.findById(req.params.id);
+        res.render("edit.ejs", {
+            eldwep: foundWep
+        });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+module.exports = router;

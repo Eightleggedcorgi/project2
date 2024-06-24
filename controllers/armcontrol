@@ -1,0 +1,83 @@
+const express = require('express');
+const router = express.Router();
+
+const Eldenarm = require('../models/arm');
+
+// ARMOR SEED TESTING
+router.get("/seed", async (req, res) => {
+    try {
+      await Eldenarm.create([
+        {
+          name: "Samurai / Land of Reeds Set",
+          found: "In the Isolated Merchant's Shack, Northern Dragonbarrow, or by starting as a samurai"
+        },
+        {
+          name: "Veteran's Set",
+          found: "Purchase from Enia after beating Commander Niall in Castle Sol, Consecrated Snowfield"
+        },
+        {
+          name: "Mushroom Set",
+          found: "In some stupid-ass stinky cave in Caelid (Seethewater specifically)"
+        },
+      ]);
+      res.redirect("/armor");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Seed Error");
+    }
+  });
+
+// ARMOR INDEX
+router.get('/', async (req, res) => {
+    try {
+        const allArmor = await Eldenarm.find({});
+        res.render('armordex.ejs', { arm: allArmor });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+// ARMOR DELETE
+router.delete('/:id', async (req, res) => {
+    try {
+        await Eldenarm.findByIdAndDelete(req.params.id)
+        res.redirect('/armor')
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// ARMOR UPDATE
+router.put("/:id", async (req, res) => {
+    try {
+        const updatedArm = await Eldenarm.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        res.redirect("/armor");
+    } catch (err) {
+        console.error(err)
+    }
+});
+
+// ARMOR CREATE
+router.post('/', async (req, res) => {
+    try {
+        const createdArm = await Eldenarm.create(req.body);
+        res.redirect("/armor");
+    } catch (err) {
+        console.error(err);
+        res.status(500).send(err);
+    }
+});
+
+// ARMOR EDIT
+router.get("/:id/edit", async (req, res) => {
+    try {
+        const foundArm = await Eldenarm.findById(req.params.id);
+        res.render("edit.ejs", {
+            eldarm: foundArm
+        });
+    } catch (err) {
+        console.error(err);
+    }
+});
+
+module.exports = router;
