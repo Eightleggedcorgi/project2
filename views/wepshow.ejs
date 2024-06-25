@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Elden Compendium: <%=eldwep.name; %> </title>
+    </head>
+    <body>
+        <h1>Weapon Page: <%=eldwep.name; %> </h1>
+        <nav>
+            <a href="/elden">Home</a>
+            <a href="/weapons">Back to Weapons</a> <br> <br>
+        </nav>
+        Found: <%=eldwep.found; %>. <br> <br>
+        Type: <%=eldwep.type; %> <br> <br>
+        Requirements: <%=eldwep.reqs; %> <br> <br>
+        Base Scaling: <%=eldwep.scaling; %> <br> <br>
+        Fully Upgraded Scaling: <%=eldwep.endScaling; %> <br> <br>
+        Damage Types: <%=eldwep.dmgtypes; %> <br> <br>
+        Extra Info: <%=eldwep.extra; %> <br> <br>
+        Is Somber? <% if(eldwep.somber === true){ %> 
+            Somber
+        <% } else { %>
+            Standard
+        <% } %> <br>
+    </body>
+</html>

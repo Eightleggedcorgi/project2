@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit: <%=eldwep.name; %></title>
+</head>
+<body>
+    <h1>Editing: <%=eldwep.name; %></h1>
+    <form action="/weapons/<%=eldwep.id%>?_method=PUT" method="POST">
+        Name: <input type="text" name="name" value="<%=eldwep.name%>"/><br/> <br>
+        Found: <input type="text" name="found" value="<%=eldwep.found%>"/><br/> <br>
+        Type: <input type="text" name="type" value="<%=eldwep.type%>"/><br/> <br>
+        Requirements: <input type="text" name="reqs" value="<%=eldwep.reqs%>"/><br/> <br>
+        Scaling: <input type="text" name="scaling" value="<%=eldwep.scaling%>"/><br/> <br>
+        Fully Upgraded Scaling: <input type="text" name="endScaling" value="<%=eldwep.endScaling%>"/><br/> <br>
+        Damage Types: <input type="text" name="dmgtypes" value="<%=eldwep.dmgtypes%>"/><br/> <br>
+        Extra Info: <input type="text" name="extra" value="<%=eldwep.extra%>"/><br/> <br>
+        Is Somber: <input type="checkbox" name="somber" /><br/> <br>
+        <% if(eldwep.somber === true) { %>
+            
+        <% } %>
+        SOMBER CHECK CURRENTLY BROKEN
+        <br/>
+        <input type="submit" value="Submit Changes"/>
+    </form>
+</body>
+</html>

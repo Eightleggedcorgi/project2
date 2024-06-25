@@ -103,12 +103,25 @@ router.post('/', async (req, res) => {
 router.get("/:id/edit", async (req, res) => {
     try {
         const foundWep = await Eldenweps.findById(req.params.id);
-        res.render("edit.ejs", {
+        res.render("wepedit.ejs", {
             eldwep: foundWep
         });
     } catch (err) {
         console.error(err);
     }
 });
+
+// WEAPON SHOW
+router.get("/:id", async (req, res) => {
+    try {
+      const foundWep = await Eldenweps.findById(req.params.id);
+      res.render("wepshow.ejs", {
+        eldwep: foundWep
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  });
+
 
 module.exports = router;
