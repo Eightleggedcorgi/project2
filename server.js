@@ -1,8 +1,10 @@
 const express = require('express');
+const ejs = require('ejs');
 const mongoose = require('mongoose');
 const app = express();
 const methodOverride = require('method-override');
 const port = process.env.PORT || 3000
+app.set('view engine', 'ejs');
 const eldController = require('./controllers/elden');
 const wepController = require('./controllers/wepcontrol');
 const armController = require('./controllers/armcontrol');
@@ -24,6 +26,7 @@ app.use('/armor', armController);
 app.use('/rings', ringController);
 app.use('/incantations', cantController);
 app.use('/sorceries', sorcController);
+app.use( express.static(__dirname+'/assets/css'));
 
 // CONNECTOR
 async function connectToMongo() {

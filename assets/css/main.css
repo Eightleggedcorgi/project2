@@ -1,0 +1,23 @@
+body {
+    display: inline-flex;
+    background-color: black;
+    color: gold;
+}
+
+head {
+    padding: 50px;
+}
+
+h1 {
+    padding: 20px;
+    margin: 20px;
+}
+
+nav {
+    margin: 15px;
+    padding: 10px 160px 0px 220px;
+}
+
+body {
+    border-bottom: 1px solid gold;
+}

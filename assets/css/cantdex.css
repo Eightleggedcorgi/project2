@@ -1,0 +1,33 @@
+body {
+    background-color: rgb(252, 223, 58);
+}
+
+h1 {
+    padding: 10px;
+}
+
+nav {
+    padding-left: 30px;
+}
+
+h1, nav {
+    display: inline-flex;
+}
+
+li {
+    display: flex;
+}
+
+h4 {
+    margin-left: 1em;
+}
+
+form {
+    margin-left: 1em;
+    margin-top: 1.2em;
+}
+
+.edit {
+    margin-left: 1em;
+    margin-top: 1.2em;
+}

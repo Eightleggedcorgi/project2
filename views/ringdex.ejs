@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./ringdex.css">
     <title>Elden Compendium: Rings</title>
 </head>
 <body>
@@ -20,7 +21,7 @@
                 <form action='/rings/<%=ring[i].id %>?_method=DELETE' method='POST'>
                     <input type='submit' value='Delete Entry'/>
                 </form>
-                <a href="/rings/<%=ring[i].id %>/edit">Edit Entry</a> <br> <br>
+                <div class="edit"> <a href="/rings/<%=ring[i].id %>/edit">Edit Entry</a> </div> <br> <br>
             </li>
         <% } %>
     </ul>
