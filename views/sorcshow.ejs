@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Elden Compendium: <%=eldsorc.name; %> </title>
+    </head>
+    <body>
+        <h1>Sorcery Page: <%=eldsorc.name; %> </h1>
+        <nav>
+            <h3> <a href="/elden">Home</a>
+            <a href="/sorceries">Back to Sorceries</a> </h3> <br>
+        </nav>
+        <h2>Found: <%=eldsorc.found; %>. <br> <br>
+        Details:   <%=eldsorc.details; %> <br> <br>
+        Requirements:   <%=eldsorc.reqs; %> <br> <br>
+        Damage Types:   <%=eldsorc.dmgtypes; %> <br> <br>
+        FP Cost:   <%=eldsorc.fpcost; %> <br> <br>
+        Spell Slots Used:   <%=eldsorc.slotcost; %> <br> <br>
+        Can Charge?   <% if(eldsorc.cancharge === true){ %> 
+                Chargeable
+            <% } else { %>
+                Standard
+            <% } %> </h2> <br>
+    </body>
+</html>

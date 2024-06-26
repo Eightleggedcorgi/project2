@@ -8,20 +8,21 @@
 <body>
     <h1> Non-Elden Rings </h1>
     <nav>
-        <a href="/elden">Home</a> <br> <br>
-        <a href="/elden/new">Add an Entry!</a>
+        <h3><a href="/elden">Home</a>
+        <a href="/rings/new">Add an Entry!</a> </h3>
     </nav>
     <ul>
         <% for (let i = 0; i < ring.length; i++) { %>
             <li>
-                The <a href='/ring/<%=ring[i].id %> '>
-                    <%=ring[i].name; %> <br>
-                </a> <%=ring[i].found; %> <br>
-                <%=ring[i].effect; %> <br>
+                <a href='/rings/<%=ring[i].id %> '>
+                    <h3><%=ring[i].name;%></a></h3>
+                    <h4>Found: <%=ring[i].found; %></h4>
                 <form action='/rings/<%=ring[i].id %>?_method=DELETE' method='POST'>
                     <input type='submit' value='Delete Entry'/>
                 </form>
-            <% } %>
-        </ul>
+                <a href="/rings/<%=ring[i].id %>/edit">Edit Entry</a> <br> <br>
+            </li>
+        <% } %>
+    </ul>
 </body>
 </html>

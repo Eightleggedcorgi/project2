@@ -7,10 +7,10 @@
     <body>
         <h1>Weapon Page: <%=eldwep.name; %> </h1>
         <nav>
-            <a href="/elden">Home</a>
-            <a href="/weapons">Back to Weapons</a> <br> <br>
+            <h3> <a href="/elden">Home</a>
+            <a href="/weapons">Back to Weapons</a> </h3> <br>
         </nav>
-        Found: <%=eldwep.found; %>. <br> <br>
+        <h2>Found: <%=eldwep.found; %>. <br> <br>
         Type: <%=eldwep.type; %> <br> <br>
         Requirements: <%=eldwep.reqs; %> <br> <br>
         Base Scaling: <%=eldwep.scaling; %> <br> <br>
@@ -21,6 +21,6 @@
             Somber
         <% } else { %>
             Standard
-        <% } %> <br>
+        <% } %> </h2> <br>
     </body>
 </html>

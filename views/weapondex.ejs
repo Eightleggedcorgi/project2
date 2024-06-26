@@ -8,15 +8,15 @@
 <body>
     <h1> WEBBUNS </h1>
     <nav>
-        <a href="/elden">Home</a>
-        <a href="/weapons/new">Add an Entry!</a>
+        <h3><a href="/elden">Home</a>
+        <a href="/weapons/new">Add an Entry!</a> </h3>
     </nav>
     <ul>
         <% for (let i = 0; i < weps.length; i++) { %>
             <li>
                 <a href='/weapons/<%=weps[i].id %> '>
-                    <%=weps[i].name;%></a>
-                    Found: <%=weps[i].found; %> <br> <br>
+                    <h3><%=weps[i].name;%></a></h3>
+                    <h4>Found: <%=weps[i].found; %></h4>
                 <form action='/weapons/<%=weps[i].id %>?_method=DELETE' method='POST'>
                     <input type='submit' value='Delete Entry'/>
                 </form>

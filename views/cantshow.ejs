@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Elden Compendium: <%=eldcant.name; %> </title>
+    </head>
+    <body>
+        <h1>Incantation Page: <%=eldcant.name; %> </h1>
+        <nav>
+            <h3> <a href="/elden">Home</a>
+            <a href="/incantations">Back to Incantations</a> </h3> <br>
+        </nav>
+        <h2>Found: <%=eldcant.found; %>. <br> <br>
+        Details:   <%=eldcant.details; %> <br> <br>
+        Requirements:   <%=eldcant.reqs; %> <br> <br>
+        Damage Types:   <%=eldcant.dmgtypes; %> <br> <br>
+        FP Cost:   <%=eldcant.fpcost; %> <br> <br>
+        Spell Slots Used:   <%=eldcant.slotcost; %> <br> <br>
+        Can Charge?   <% if(eldcant.cancharge === true){ %> 
+                Chargeable
+            <% } else { %>
+                Standard
+            <% } %> </h2> <br>
+    </body>
+</html>

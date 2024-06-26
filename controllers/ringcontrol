@@ -40,6 +40,11 @@ router.get('/', async (req, res) => {
     }
 });
 
+// RING NEW
+router.get('/new', (req, res) => {
+    res.render('ringnew.ejs')
+});
+
 // RING DELETE
 router.delete('/:id', async (req, res) => {
     try {
@@ -54,9 +59,7 @@ router.delete('/:id', async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const updatedRing = await Eldenring.findByIdAndUpdate(req.params.id, req.body, { new: true });
-        res.redirect("/rings", {
-            improvedring: updatedRing
-        });
+        res.redirect("/rings");
     } catch (err) {
         console.error(err)
     }
@@ -77,11 +80,23 @@ router.post('/', async (req, res) => {
 router.get("/:id/edit", async (req, res) => {
     try {
         const foundRing = await Eldenring.findById(req.params.id);
-        res.render("edit.ejs", {
+        res.render("ringedit.ejs", {
             eldring: foundRing
         });
     } catch (err) {
         console.error(err);
+    }
+});
+
+// RING SHOW
+router.get("/:id", async (req, res) => {
+    try {
+      const foundRing = await Eldenring.findById(req.params.id);
+      res.render("ringshow.ejs", {
+        eldring: foundRing
+      });
+    } catch (error) {
+      console.error(error);
     }
 });
 

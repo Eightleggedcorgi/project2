@@ -6,31 +6,23 @@
     <title>Elden Compendium: Incantations</title>
 </head>
 <body>
-    <h1> By God and Anime </h1>
+    <h1> BY GOD AND ANIME </h1>
     <nav>
-        <a href="/elden">Home</a> <br> <br>
-        <a href="/elden/new">Add an Entry!</a>
+        <h3> <a href="/elden">Home</a>
+        <a href="/incantations/new">Add an Entry!</a> </h3>
     </nav>
     <ul>
         <% for (let i = 0; i < cant.length; i++) { %>
             <li>
-                The <a href='/cant/<%=cant[i].id %> '>
-                    <%=cant[i].name; %> <br>
-                </a> <%=cant[i].found; %> <br>
-                <%=cant[i].details; %> <br>
-                <%=cant[i].reqs; %> <br>
-                <%=cant[i].dmgtypes; %> <br>
-                <%=cant[i].fpcost; %> <br>
-                <%=cant[i].slotcost; %> <br>
-                <% if(cant[i].cancharge === true){ %> 
-                    Chargeable
-                <% } else { %>
-                    Standard
-                <% } %> <br>
+                <a href='/incantations/<%=cant[i].id %> '>
+                    <h3><%=cant[i].name;%></a></h3>
+                    <h4>Found: <%=cant[i].found; %> </h4>
                 <form action='/incantations/<%=cant[i].id %>?_method=DELETE' method='POST'>
                     <input type='submit' value='Delete Entry'/>
                 </form>
-            <% } %>
-        </ul>
+                <a href="/incantations/<%=cant[i].id %>/edit">Edit Entry</a> <br> <br>
+            </li>
+        <% } %>
+    </ul>
 </body>
 </html>

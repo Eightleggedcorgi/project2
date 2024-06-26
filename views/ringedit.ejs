@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit: <%=eldring.name; %></title>
+</head>
+<body>
+    <h1>Editing: <%=eldring.name; %></h1>
+    <form action="/rings/<%=eldring.id%>?_method=PUT" method="POST">
+        <h2> Name: <input type="text" name="name" value="<%=eldring.name%>"/><br/> <br>
+        Found: <input type="text" name="found" value="<%=eldring.found%>"/><br/> <br>
+        Effect: <input type="text" name="effect" value="<%=eldring.effect%>"/><br/> <br>
+        <br/>
+        <input type="submit" value="Submit Changes"/> </h2>
+    </form>
+</body>
+</html>

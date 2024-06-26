@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit: <%=eldsorc.name; %></title>
+</head>
+<body>
+    <h1>Editing: <%=eldsorc.name; %></h1>
+    <form action="/sorceries/<%=eldsorc.id%>?_method=PUT" method="POST">
+        <h2> Name: <input type="text" name="name" value="<%=eldsorc.name%>"/><br/> <br>
+        Found: <input type="text" name="found" value="<%=eldsorc.found%>"/><br/> <br>
+        Details: <input type="text" name="details" value="<%=eldsorc.details%>"/><br/> <br>
+        Requirements: <input type="text" name="reqs" value="<%=eldsorc.reqs%>"/><br/> <br>
+        Damage Types: <input type="text" name="dmgtypes" value="<%=eldsorc.dmgtypes%>"/><br/> <br>
+        FP Cost (Numbers Only): <input type="text" name="fpcost" value="<%=eldsorc.fpcost%>"/><br/> <br>
+        Spell Slots Used (Numbers Only): <input type="text" name="slotcost" value="<%=eldsorc.slotcost%>"/><br/> <br>
+        Can Charge: <input type="checkbox" name="cancharge" value="<%=eldsorc.chargeable%>"/><br/> <br>
+        CHARGE CHECK CURRENTLY BROKEN
+        <br/>
+        <input type="submit" value="Submit Changes"/> </h2>
+    </form>
+</body>
+</html>
