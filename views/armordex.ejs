@@ -9,17 +9,19 @@
     <h1> AHMAH </h1>
     <nav>
         <a href="/elden">Home</a> <br> <br>
-        <a href="/elden/new">Add an Entry!</a>
+        <a href="/armor/new">Add an Entry!</a>
     </nav>
     <ul>
         <% for (let i = 0; i < arm.length; i++) { %>
             <li>
-                The <a href='/arm/<%=arm[i].id %> '>
-                    <%=arm[i].name; %>
-                </a> <%=arm[i].found; %>
+                The <a href='/armor/<%=arm[i].id %> '>
+                    <%=arm[i].name;%></a>
+                    Found: <%=arm[i].found; %>  <br> <br>
                 <form action='/armor/<%=arm[i].id %>?_method=DELETE' method='POST'>
                     <input type='submit' value='Delete Entry'/>
                 </form>
+                <a href="/armor/<%=arm[i].id %>/edit">Edit Entry</a> <br> <br>
+            </li>
             <% } %>
         </ul>
 </body>

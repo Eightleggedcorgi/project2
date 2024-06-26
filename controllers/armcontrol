@@ -37,6 +37,11 @@ router.get('/', async (req, res) => {
     }
 });
 
+// ARMOR NEW
+router.get('/new', (req, res) => {
+    res.render('armornew.ejs')
+});
+
 // ARMOR DELETE
 router.delete('/:id', async (req, res) => {
     try {
@@ -77,6 +82,18 @@ router.get("/:id/edit", async (req, res) => {
         });
     } catch (err) {
         console.error(err);
+    }
+});
+
+// ARMOR SHOW
+router.get("/:id", async (req, res) => {
+    try {
+      const foundArm = await Eldenarm.findById(req.params.id);
+      res.render("armshow.ejs", { //currently unused for simplicity
+        eldarm: foundArm
+      });
+    } catch (error) {
+      console.error(error);
     }
 });
 

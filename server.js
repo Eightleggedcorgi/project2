@@ -9,8 +9,9 @@ const armController = require('./controllers/armcontrol');
 const ringController = require('./controllers/ringcontrol');
 const cantController = require('./controllers/cantcontrol');
 const sorcController = require('./controllers/sorccontrol');
+require("dotenv").config(); //for deploying
 
-const mongoURI = 'mongodb+srv://SEBPT319:Stupid@cluster0.ahxum32.mongodb.net/'
+const mongoURI = process.env.MONGOURI;
 
 // MIDDLEWARE
 app.use(express.static('public'));
